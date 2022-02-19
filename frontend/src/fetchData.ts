@@ -12,8 +12,16 @@ export async function fetchData() {
     if (response.status === 200) {
         const reader = response.body?.pipeThrough(new TextDecoderStream()).getReader();
         if (reader) {
-            const { value, done } = await reader.read();
-            log("fetch ok", value, done);
+            while (true) {
+                const { value, done } = await reader.read();
+                if (value) {
+                    log("fetching", value);
+                }
+                if (done) {
+                    break;
+                }
+            }
+            log("fetch done");
         } else {
             log("fetch error:", "body empty");
         }

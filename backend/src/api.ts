@@ -1,5 +1,6 @@
 import { app } from "./initDefaultHttp";
 import { SERVER_API_ROOT } from "./config";
+import { DummyDataConnection } from "./DummyDataConnection";
 
 export function initApi() {
     const path = SERVER_API_ROOT + "/" + "dummydata";
@@ -19,11 +20,22 @@ export function initApi() {
         res.setHeader("Content-Type", "text/html");
 
         res.write(new Date().toISOString());
-        res.end();
+
+        const connection = new DummyDataConnection(99, 10);
+        connection.query((type, data) => {
+            // if any data, then we send it
+            if (data.length) {
+                res.write(JSON.stringify(data));
+            }
+
+            if (type === "close") {
+                res.end();
+                next();
+            }
+        });
+
         // todo:
         // add dummy data array 50k
         // send get batches of 200 rows and send to client
-
-        next();
     });
 }
