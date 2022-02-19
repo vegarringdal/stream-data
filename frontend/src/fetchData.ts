@@ -15,7 +15,7 @@ export async function fetchData() {
             while (true) {
                 const { value, done } = await reader.read();
                 if (value) {
-                    log("fetching", value);
+                    log("fetching", JSON.parse(value));
                 }
                 if (done) {
                     break;

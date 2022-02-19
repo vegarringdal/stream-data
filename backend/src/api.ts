@@ -19,8 +19,6 @@ export function initApi() {
 
         res.setHeader("Content-Type", "text/html");
 
-        res.write(new Date().toISOString());
-
         const connection = new DummyDataConnection(99, 10);
         connection.query((type, data) => {
             // if any data, then we send it

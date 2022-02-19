@@ -38,7 +38,18 @@ export class DummyDataConnection {
         for (let i = 0; this.currentRow < this.rows; i++) {
             this.currentRow++;
             batchCount++;
-            data.push({ id: this.currentRow, name: "person" + this.currentRow });
+            data.push({
+                id: this.currentRow,
+                name: "person" + this.currentRow,
+                name1: "person" + this.currentRow,
+                name2: "person" + this.currentRow,
+                name3: "person" + this.currentRow,
+                name4: "person" + this.currentRow,
+                name5: "person" + this.currentRow,
+                name6: "person" + this.currentRow,
+                name7: "person" + this.currentRow,
+                name8: "person" + this.currentRow
+            });
             if (batchCount === this.batchSize) {
                 evenHandler(this.getType(), data);
                 await this.wait(50);
