@@ -1,3 +1,4 @@
+import { initApi } from "./api";
 import { initHttpConfig, startHttpServer } from "./initDefaultHttp";
 
 /**
@@ -13,7 +14,7 @@ initHttpConfig();
 // TODO: for you :-)
 
 // add rest api
-// TODO: for you :-)
+initApi();
 
 // time to start server
 startHttpServer();
