@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "rootDirs": ["./src", "../common/src"],
+        "target": "es2017",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "isolatedModules": false,
+        "esModuleInterop": true
+    },
+    "exclude": ["node_modules", "dist"]
+}
