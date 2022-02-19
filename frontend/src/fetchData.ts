@@ -1,13 +1,5 @@
 type event = "error" | "done" | "data";
 export async function fetchData(callback: (type: event, data: any) => void) {
-    /**
-     * helper for logging
-     * @param msg
-     */
-    function log(...msg: any[]) {
-        console.log(msg);
-    }
-
     const response = await fetch("/api/dummydata");
 
     if (response.status === 200) {
