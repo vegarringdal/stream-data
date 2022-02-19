@@ -19,7 +19,10 @@ export function initApi() {
 
         res.setHeader("Content-Type", "text/html");
 
+        // make our dummy data connection, set how many rows, and response cache
         const connection = new DummyDataConnection(20154, 200);
+
+        // call dummy connection with query and send data to client as we get it
         connection.query((type, data) => {
             // if any data, then we send it
             if (data.length) {
@@ -31,9 +34,5 @@ export function initApi() {
                 next();
             }
         });
-
-        // todo:
-        // add dummy data array 50k
-        // send get batches of 200 rows and send to client
     });
 }
