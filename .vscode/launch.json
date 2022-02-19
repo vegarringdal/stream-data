@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch Chrome",
+            "request": "launch",
+            "type": "pwa-chrome",
+            "url": "http://localhost:1080",
+            "webRoot": "${workspaceFolder}/frontend"
+        },
+        {
             "type": "node",
             "request": "launch",
             "name": "Jest Current File frontend (jest)",
@@ -16,6 +23,13 @@
             "windows": {
                 "program": "${workspaceFolder}/node_modules/jest/bin/jest"
             }
+        },
+        {
+            "name": "Attach backendprocess",
+            "port": 9229,
+            "request": "attach",
+            "skipFiles": ["<node_internals>/**"],
+            "type": "pwa-node"
         }
     ]
 }
