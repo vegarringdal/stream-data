@@ -19,7 +19,7 @@ export function initApi() {
 
         res.setHeader("Content-Type", "text/html");
 
-        const connection = new DummyDataConnection(99, 10);
+        const connection = new DummyDataConnection(20154, 200);
         connection.query((type, data) => {
             // if any data, then we send it
             if (data.length) {

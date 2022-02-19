@@ -9,7 +9,26 @@ function App() {
                 Stream data
             </header>
             <div className="flex-1">
-                <button className="p-2 w-28 m-2 bg-gray-600" onClick={() => fetchData()}>
+                <button
+                    className="p-2 w-28 m-2 bg-gray-600"
+                    onClick={() => {
+                        let count = 0;
+                        fetchData((event, data) => {
+                            switch (event) {
+                                case "data":
+                                    count = count + data.length;
+                                    console.log("data rows recived:", count);
+                                    break;
+                                case "done":
+                                    console.log("done", count);
+                                    break;
+                                case "error":
+                                    console.log("error", data, count);
+                                    break;
+                            }
+                        });
+                    }}
+                >
                     Get Data
                 </button>
             </div>
