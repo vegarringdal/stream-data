@@ -16,8 +16,8 @@ function App() {
                         fetchData((event, data) => {
                             switch (event) {
                                 case "data":
-                                    count = count + data.length;
-                                    console.log("data rows recived:", count);
+                                    count++;
+                                    console.log("data rows recived:", data?.name);
                                     break;
                                 case "done":
                                     console.log("done", count);

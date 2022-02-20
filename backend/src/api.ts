@@ -17,19 +17,33 @@ export function initApi() {
         log("API method", req.method);
         log("API params", req.params);
 
-        res.setHeader("Content-Type", "text/html");
+        res.setHeader("Content-Type", "application/json");
 
         // make our dummy data connection, set how many rows, and response cache
-        const connection = new DummyDataConnection(20154, 200);
+        const connection = new DummyDataConnection(2001, 37);
 
         // call dummy connection with query and send data to client as we get it
+
+        let firstCall = true;
+
         connection.query((type, data) => {
             // if any data, then we send it
+
+            if (firstCall) {
+                // need to open the query
+                res.write("[");
+                firstCall = false;
+            }
+
             if (data.length) {
-                res.write(JSON.stringify(data));
+                // substring data, so we remove the brackets "[" "]"
+                const text = JSON.stringify(data);
+                console.log(text);
+                res.write(text.substring(1, text.length - 1));
             }
 
             if (type === "close") {
+                res.write("]"); // need to close our array
                 res.end();
                 next();
             }

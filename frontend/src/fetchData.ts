@@ -8,43 +8,53 @@ export async function fetchData(callback: (type: event, data: any) => void) {
             // this will hold leftover data between every read
             let cache = "";
 
+            let firstCall = true;
+
             while (true) {
                 const { value, done } = await reader.read();
 
                 // if we have any in cache, then we need to add it before new value
-                const text = cache + value;
+                let text = cache + (value || ""); // if value is undefined, just use ""
+                cache = "";
+
+                if (firstCall) {
+                    text = text.substring(1, text.length);
+                    firstCall = false;
+                }
 
                 // length we need to loop
                 const length = text.length;
 
                 // check if we have text, and it starts with open bracket
-                if (text && text[0] === "[") {
+                if (text && text.length) {
                     // set open bracket to buffer
-                    let buffer = text[0];
+                    let buffer = "";
                     // since we skip first bracket we set group to 1
-                    let group = 1;
+                    let group = 0;
 
                     // loop all and skip first letter
-                    for (let i = 1; i < length; i++) {
+                    for (let i = 0; i < length; i++) {
                         // add letter to our buffer
                         buffer = buffer + text[i];
 
                         // if open bracket, then its a new group
-                        if (text[i] === "[") {
+                        if (text[i] === "{") {
                             group++;
                         }
 
                         // if close, then group is done
-                        if (text[i] === "]") {
+                        if (text[i] === "}") {
                             group--;
                         }
 
                         // if close bracket, and group is 0, then we are in the end of our array, send back data to caller
-                        if (text[i] === "]" && group === 0) {
+                        if (text[i] === "}" && group === 0) {
+                            if (buffer[0] === ",") {
+                                buffer = buffer.substring(1, buffer.length);
+                            }
+
                             callback("data", JSON.parse(buffer));
                             buffer = "";
-                            cache = text.substring(i + 1, text.length);
-                            i = length;
                         }
 
                         // last row, if anything in buffer then we need to keep it
@@ -54,7 +64,11 @@ export async function fetchData(callback: (type: event, data: any) => void) {
                         }
                     }
 
-                    if (done) {
+                    // if done and we only have bracket of "array" left then we are in the end..
+                    // might need some other checks here too.. so we dont end up with endless loop ?
+                    // maybe if there is no text, lock application if server sends bad data
+                    // or just a count when  "done=== true", if it happen more then 2 times, then something is wrong
+                    if (done && text === "]") {
                         break;
                         callback("done", null);
                     }
