@@ -2,7 +2,7 @@ type returntype = "data" | "close";
 
 export class DummyDataConnection {
     currentRow: number;
-    constructor(private rows: number, private batchSize: number) {
+    constructor(private rows: number, private batchSize: number, private fakeWait = 20) {
         this.currentRow = 0;
     }
 
@@ -52,7 +52,7 @@ export class DummyDataConnection {
             });
             if (batchCount === this.batchSize) {
                 evenHandler(this.getType(), data);
-                await this.wait(50);
+                await this.wait(this.fakeWait);
                 data = [];
                 batchCount = 0;
             }

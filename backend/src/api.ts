@@ -20,7 +20,7 @@ export function initApi() {
         res.setHeader("Content-Type", "application/json");
 
         // make our dummy data connection, set how many rows, and response cache
-        const connection = new DummyDataConnection(2345, 37);
+        const connection = new DummyDataConnection(50021, 200, 25);
 
         // call dummy connection with query and send data to client as we get it
 
