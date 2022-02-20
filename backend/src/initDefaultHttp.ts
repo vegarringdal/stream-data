@@ -59,14 +59,14 @@ export function initHttpConfig() {
     /**
      * Compression
      */
-    if (SERVER_COMPRESSION) {
-        app.use(
+
+   /*      app.use(
             compression({
                 threshold: 1,
                 flush: zlib.constants.Z_SYNC_FLUSH
             })
         );
-    }
+     */
 
     /**
      * body parser

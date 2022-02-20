@@ -65,12 +65,16 @@ export async function fetchData(callback: (type: event, data: any) => void) {
                     }
 
                     // if done and we only have bracket of "array" left then we are in the end..
-                    // might need some other checks here too.. so we dont end up with endless loop ?
-                    // maybe if there is no text, lock application if server sends bad data
-                    // or just a count when  "done=== true", if it happen more then 2 times, then something is wrong
+
                     if (done && text === "]") {
                         break;
                         callback("done", null);
+                    }
+                    if (done && !value) {
+                        callback(
+                            "error",
+                            "unexpected result, bad data from server?, unparsed data:" + text
+                        );
                     }
                 } else {
                     if (done) {

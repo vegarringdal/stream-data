@@ -20,7 +20,7 @@ export function initApi() {
         res.setHeader("Content-Type", "application/json");
 
         // make our dummy data connection, set how many rows, and response cache
-        const connection = new DummyDataConnection(2001, 37);
+        const connection = new DummyDataConnection(2345, 37);
 
         // call dummy connection with query and send data to client as we get it
 
@@ -38,7 +38,7 @@ export function initApi() {
             if (data.length) {
                 // substring data, so we remove the brackets "[" "]"
                 const text = JSON.stringify(data);
-                console.log(text);
+                log("sending records:", data?.length || 0);
                 res.write(text.substring(1, text.length - 1));
             }
 
